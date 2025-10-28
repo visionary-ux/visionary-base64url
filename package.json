@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "visionary-base64url",
   "description": "A platform-agnostic library for URL-safe Base64 encoding and decoding.",
   "main": "dist/index.js",
@@ -30,10 +30,10 @@
   "devDependencies": {
     "@types/node": "20.17.10",
     "rimraf": "5.0.10",
-    "typescript": "5.7.2",
-    "vitest": "2.1.8"
+    "typescript": "5.9.3",
+    "vitest": "4.0.4"
   },
   "dependencies": {
-    "js-base64": "3.7.7"
+    "js-base64": "3.7.8"
   }
 }

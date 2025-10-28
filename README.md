@@ -2,7 +2,7 @@
 
 ![NPM version](https://img.shields.io/npm/v/visionary-base64url?color=beige) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/visionary-ux/visionary-base64url/.github%2Fworkflows%2Fci-cd-workflow.yml?branch=master) ![NPM bundle size](https://img.shields.io/bundlephobia/minzip/visionary-base64url?color=blue) ![NPM Downloads](https://img.shields.io/npm/d18m/visionary-base64url?color=lightgray)
 
-A cross-platform base64url converter for Node.js, web browsers, and worker environments. Tiny wrapper for `js-base64` which leverages `TextEncoder`, `atob`, or `Buffer` based on runtime availability.
+A lightweight base64url converter for Node.js, web browsers, and worker environments. Built on `js-base64` with automatic runtime detection for maximum compatibility.
 
 ## Install
 
@@ -21,7 +21,7 @@ import { encodeBase64Url } from "visionary-base64url";
 const encoded = encodeBase64Url("The quick brown fox jumps over the lazy dog.");
 
 console.log(encoded);
-// -> VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZy4
+// VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZy4
 ```
 
 ### Decode a Base64URL
@@ -32,5 +32,5 @@ import { decodeBase64Url } from "visionary-base64url";
 const decoded = decodeBase64Url("aHR0cHM6Ly93d3cuc3BhY2V4LmNvbS92ZWhpY2xlcy9zdGFyc2hpcA");
 
 console.log(decoded);
-// -> https://www.spacex.com/vehicles/starship
+// https://www.spacex.com/vehicles/starship
 ```
