@@ -8,8 +8,9 @@
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist/",
-    "prepublishOnly": "npm run clean && npm run build && npm run test",
-    "test": "vitest"
+    "prepublishOnly": "npm run clean && npm run build && npm run test:ci",
+    "test": "vitest",
+    "test:ci": "vitest run"
   },
   "license": "ISC",
   "keywords": [
@@ -21,9 +22,7 @@
     "visionary"
   ],
   "files": [
-    "dist/",
-    "package.json",
-    "README.md"
+    "dist/"
   ],
   "repository": {
     "type": "git",
