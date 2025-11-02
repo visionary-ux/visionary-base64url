@@ -33,7 +33,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
-      - run: npm test:ci
+      - run: npm run test:ci
       - name: Publish dry-run
         run: npm publish --dry-run
       - name: Publish to NPM
