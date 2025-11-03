@@ -2,7 +2,6 @@
   "version": "0.1.2",
   "name": "visionary-base64url",
   "description": "A lightweight library for URL-safe Base64 encoding and decoding.",
-  "homepage": "https://github.com/visionary-ux/visionary-base64url",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

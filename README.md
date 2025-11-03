@@ -1,6 +1,6 @@
 # visionary-base64url
 
-[![NPM version](https://img.shields.io/npm/v/visionary-base64url?color=beige)](https://www.npmjs.com/package/visionary-base64url) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/visionary-ux/visionary-base64url/.github%2Fworkflows%2Fci-cd-workflow.yml?branch=master) ![NPM bundle size](https://img.shields.io/bundlephobia/minzip/visionary-base64url?color=blue) ![NPM Downloads](https://img.shields.io/npm/d18m/visionary-base64url?color=lightgray)
+[![NPM version](https://img.shields.io/npm/v/visionary-base64url?color=beige)](https://www.npmjs.com/package/visionary-base64url) [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/visionary-ux/visionary-base64url/.github%2Fworkflows%2Fci-cd-workflow.yml?branch=master)](https://github.com/visionary-ux/visionary-base64url/actions) [![NPM bundle size](https://img.shields.io/bundlephobia/minzip/visionary-base64url?color=blue)](https://bundlephobia.com/package/visionary-base64url) [![NPM Downloads](https://img.shields.io/npm/d18m/visionary-base64url?color=lightgray)](https://www.npmjs.com/package/visionary-base64url?activeTab=versions)
 
 A lightweight `base64url` converter for Node.js, web browsers, and worker environments. Built on `js-base64` for broad compatibility and automatic runtime detection.
 
