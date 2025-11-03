@@ -18,6 +18,8 @@
     "base64",
     "decoder",
     "encoder",
+    "url",
+    "url-safe",
     "utility",
     "visionary"
   ],
