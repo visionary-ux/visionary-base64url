@@ -1,13 +1,15 @@
 {
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "visionary-base64url",
-  "description": "A platform-agnostic library for URL-safe Base64 encoding and decoding.",
+  "description": "A lightweight library for URL-safe Base64 encoding and decoding.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist/",
-    "test": "vitest"
+    "prepublishOnly": "npm run clean && npm run build && npm run test:ci",
+    "test": "vitest",
+    "test:ci": "vitest run"
   },
   "license": "ISC",
   "keywords": [
@@ -15,25 +17,25 @@
     "base64",
     "decoder",
     "encoder",
+    "url",
+    "url-safe",
     "utility",
     "visionary"
   ],
   "files": [
-    "dist/",
-    "package.json",
-    "README.md"
+    "dist/"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/visionary-ux/base64url.git"
+    "url": "git+https://github.com/visionary-ux/visionary-base64url.git"
   },
   "devDependencies": {
     "@types/node": "20.17.10",
     "rimraf": "5.0.10",
-    "typescript": "5.7.2",
-    "vitest": "2.1.8"
+    "typescript": "5.9.3",
+    "vitest": "4.0.4"
   },
   "dependencies": {
-    "js-base64": "3.7.7"
+    "js-base64": "3.7.8"
   }
 }

@@ -33,6 +33,50 @@ const testCases: Array<TestCase> = [
     text: "https://www.spacex.com/vehicles/starship",
     encodedText: "aHR0cHM6Ly93d3cuc3BhY2V4LmNvbS92ZWhpY2xlcy9zdGFyc2hpcA",
   },
+  {
+    text: "https://openrouter.ai/rankings?view=month#market-share",
+    encodedText: "aHR0cHM6Ly9vcGVucm91dGVyLmFpL3JhbmtpbmdzP3ZpZXc9bW9udGgjbWFya2V0LXNoYXJl",
+  },
+  {
+    text: "?>?>", // produces '/' and '==' in base64 (`Pz4/Pg==`)
+    encodedText: "Pz4_Pg",
+  },
+  {
+    text: "~~~~~~~", // produces '+' and '==' in base64 (`fn5+fn5+fg==`)
+    encodedText: "fn5-fn5-fg",
+  },
+  {
+    text: "base64padding==", // test padding removal
+    encodedText: "YmFzZTY0cGFkZGluZz09",
+  },
+  {
+    text: "slash/slash",
+    encodedText: "c2xhc2gvc2xhc2g",
+  },
+  {
+    text: "Hello, 世界! 🌍", // unicode and emoji
+    encodedText: "SGVsbG8sIOS4lueVjCEg8J-MjQ",
+  },
+  {
+    text: "user@example.com",
+    encodedText: "dXNlckBleGFtcGxlLmNvbQ",
+  },
+  {
+    text: '{"key":"value"}', // stringified JSON
+    encodedText: "eyJrZXkiOiJ2YWx1ZSJ9",
+  },
+  {
+    text: "Line1\nLine2\rLine3\r\n", // test newlines
+    encodedText: "TGluZTEKTGluZTINTGluZTMNCg",
+  },
+  {
+    text: "\t\t\tIndented", // test tabs
+    encodedText: "CQkJSW5kZW50ZWQ",
+  },
+  {
+    text: "!@#$%^&*()_+-=[]{}|;':\",./<>?`~", // test ASCII characters
+    encodedText: "IUAjJCVeJiooKV8rLT1bXXt9fDsnOiIsLi88Pj9gfg",
+  },
 ];
 
 describe(encodeBase64Url.name, () => {
