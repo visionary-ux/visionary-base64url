@@ -34,15 +34,19 @@ const testCases: Array<TestCase> = [
     encodedText: "aHR0cHM6Ly93d3cuc3BhY2V4LmNvbS92ZWhpY2xlcy9zdGFyc2hpcA",
   },
   {
-    text: "?>?>", // Produces '/' in standard base64 (Pz4/Pg==)
+    text: "https://openrouter.ai/rankings?view=month#market-share",
+    encodedText: "aHR0cHM6Ly9vcGVucm91dGVyLmFpL3JhbmtpbmdzP3ZpZXc9bW9udGgjbWFya2V0LXNoYXJl",
+  },
+  {
+    text: "?>?>", // produces '/' and '==' in base64 (`Pz4/Pg==`)
     encodedText: "Pz4_Pg",
   },
   {
-    text: "~~~~~~~", // Produces '+' in standard base64 (fn5+fn5+fg==)
+    text: "~~~~~~~", // produces '+' and '==' in base64 (`fn5+fn5+fg==`)
     encodedText: "fn5-fn5-fg",
   },
   {
-    text: "base64padding==", // Tests padding removal
+    text: "base64padding==", // test padding removal
     encodedText: "YmFzZTY0cGFkZGluZz09",
   },
   {
@@ -50,7 +54,7 @@ const testCases: Array<TestCase> = [
     encodedText: "c2xhc2gvc2xhc2g",
   },
   {
-    text: "Hello, 世界! 🌍", // Unicode and emoji
+    text: "Hello, 世界! 🌍", // unicode and emoji
     encodedText: "SGVsbG8sIOS4lueVjCEg8J-MjQ",
   },
   {
