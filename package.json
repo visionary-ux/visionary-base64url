@@ -38,10 +38,10 @@
   },
   "packageManager": "pnpm@11.5.1",
   "devDependencies": {
-    "@types/node": "20.17.10",
+    "@types/node": "24.13.2",
     "rimraf": "5.0.10",
     "typescript": "5.9.3",
-    "vitest": "4.0.4"
+    "vitest": "4.1.8"
   },
   "dependencies": {
     "js-base64": "3.7.8"
