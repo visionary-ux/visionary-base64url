@@ -39,6 +39,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
       - run: pnpm run test:ci
+      - run: pnpm run test:package
       - name: Publish dry-run
         run: pnpm publish --dry-run
       - name: Publish to NPM

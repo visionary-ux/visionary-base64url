@@ -20,7 +20,8 @@
     "clean": "rimraf dist/",
     "prepublishOnly": "pnpm run clean && pnpm run build && pnpm run test:ci",
     "test": "vitest",
-    "test:ci": "vitest run"
+    "test:ci": "vitest run",
+    "test:package": "node package-smoke.cjs"
   },
   "license": "ISC",
   "keywords": [
