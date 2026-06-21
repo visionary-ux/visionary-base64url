@@ -36,6 +36,7 @@
     "type": "git",
     "url": "git+https://github.com/visionary-ux/visionary-base64url.git"
   },
+  "packageManager": "pnpm@11.5.1",
   "devDependencies": {
     "@types/node": "20.17.10",
     "rimraf": "5.0.10",
