@@ -1,9 +1,16 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "name": "visionary-base64url",
   "description": "A lightweight library for URL-safe Base64 encoding and decoding.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist/",
