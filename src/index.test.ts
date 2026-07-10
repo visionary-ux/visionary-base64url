@@ -58,6 +58,10 @@ const testCases: Array<TestCase> = [
     encodedText: "SGVsbG8sIOS4lueVjCEg8J-MjQ",
   },
   {
+    text: "👨‍👩‍👧‍👦", // family emoji (ZWJ sequence combining 4 emoji with zero-width joiners)
+    encodedText: "8J-RqOKAjfCfkanigI3wn5Gn4oCN8J-Rpg",
+  },
+  {
     text: "user@example.com",
     encodedText: "dXNlckBleGFtcGxlLmNvbQ",
   },
