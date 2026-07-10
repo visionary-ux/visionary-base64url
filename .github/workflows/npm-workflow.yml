@@ -41,8 +41,8 @@ jobs:
       - run: pnpm run test:ci
       - run: pnpm run test:package
       - name: Publish dry-run
-        run: pnpm publish --dry-run
+        run: pnpm publish --dry-run --no-git-checks
       - name: Publish to NPM
-        run: pnpm publish
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
