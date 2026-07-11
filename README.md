@@ -2,7 +2,9 @@
 
 [![NPM version](https://img.shields.io/npm/v/visionary-base64url?color=beige)](https://www.npmjs.com/package/visionary-base64url) [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/visionary-ux/visionary-base64url/.github%2Fworkflows%2Fci-cd-workflow.yml?branch=master)](https://github.com/visionary-ux/visionary-base64url/actions) [![NPM bundle size](https://img.shields.io/bundlephobia/minzip/visionary-base64url?color=blue)](https://bundlephobia.com/package/visionary-base64url) [![NPM Downloads](https://img.shields.io/npm/d18m/visionary-base64url?color=lightgray)](https://www.npmjs.com/package/visionary-base64url?activeTab=versions)
 
-A lightweight `base64url` converter for Node.js, web browsers, and worker environments. Built on `js-base64` for broad compatibility and automatic runtime detection.
+A lightweight, zero-dependency `base64url` converter for Node.js, web browsers, and worker environments.
+
+Safely encodes emojis and unicode, like 🎉 and 汉字, into URL-safe base64.
 
 ## Install
 
@@ -40,7 +42,7 @@ console.log(decoded);
 
 `base64url` is a web-safe variant of Base64 encoding. It replaces problematic characters (`+`, `=`, `/`) with URL and filename-friendly alternatives (`_`, `-`), as defined in [RFC 4648](https://datatracker.ietf.org/doc/html/rfc4648#section-5).
 
-## Why use base64url?
+## Where is base64url used?
 
 Use `base64url` for portable, URL-safe encoding of text or JSON data, making it ideal for environments where standard Base64 might break things. Safely drop it into contexts like:
 

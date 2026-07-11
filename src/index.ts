@@ -1,4 +1,4 @@
-import { decode as decodeBase64, encode as encodeBase64 } from "js-base64";
+import { base64ToUtf8, utf8ToBase64 } from "./runtime";
 
 /**
  * Encodes a string as base64url.
@@ -12,7 +12,7 @@ export const encodeBase64Url = (input: string): string => {
     throw new Error("encodeBase64Url: input must be a string");
   }
 
-  return encodeBase64(input).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  return toBase64Url(utf8ToBase64(input));
 };
 
 /**
@@ -26,5 +26,13 @@ export const decodeBase64Url = (input: string): string => {
   if (typeof input !== "string") {
     throw new Error("decodeBase64Url: input must be a string");
   }
-  return decodeBase64(input.replace(/-/g, "+").replace(/_/g, "/"));
+
+  return base64ToUtf8(fromBase64Url(input));
 };
+
+/** Standard Base64 → base64url (RFC 4648 §5 alphabet, no padding). */
+const toBase64Url = (base64: string): string =>
+  base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+
+/** base64url → standard Base64 (RFC 4648 §4 alphabet). */
+const fromBase64Url = (base64Url: string): string => base64Url.replace(/-/g, "+").replace(/_/g, "/");
