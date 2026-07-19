@@ -1,7 +1,7 @@
 import { base64ToUtf8, utf8ToBase64 } from "./runtime";
 
 /**
- * Encodes a string as base64url.
+ * Encodes a string as base64url
  *
  * @param input string to encode
  * @returns base64url-encoded string
@@ -16,7 +16,7 @@ export const encodeBase64Url = (input: string): string => {
 };
 
 /**
- * Decodes a base64url-encoded string to plain text.
+ * Decodes a base64url-encoded string to plain text
  *
  * @param input base64url-encoded string to decode
  * @returns decoded plain text string
@@ -30,9 +30,9 @@ export const decodeBase64Url = (input: string): string => {
   return base64ToUtf8(fromBase64Url(input));
 };
 
-/** Standard Base64 → base64url (RFC 4648 §5 alphabet, no padding). */
+/** Converts standard Base64 into a URL-safe version (RFC 4648, Section 5) */
 const toBase64Url = (base64: string): string =>
   base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 
-/** base64url → standard Base64 (RFC 4648 §4 alphabet). */
+/** Converts URL-safe Base64 back to standard form (RFC 4648, Section 4: restores `+` and `/`) */
 const fromBase64Url = (base64Url: string): string => base64Url.replace(/-/g, "+").replace(/_/g, "/");

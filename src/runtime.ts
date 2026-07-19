@@ -2,6 +2,7 @@ type Runtime = "buffer" | "text-encoding";
 
 let cachedRuntime: Runtime | null = null;
 
+/** Picks the fastest available base64 path */
 const detectRuntime = (): Runtime => {
   if (typeof Buffer !== "undefined" && typeof Buffer.from === "function") {
     return "buffer";
@@ -19,6 +20,7 @@ const detectRuntime = (): Runtime => {
   throw new Error("No UTF-8 base64 implementation available");
 };
 
+/** Detects the runtime once, reuses the cached result */
 const getRuntime = (): Runtime => {
   if (cachedRuntime === null) {
     cachedRuntime = detectRuntime();
@@ -32,6 +34,7 @@ export const resetRuntimeForTesting = (): void => {
   cachedRuntime = null;
 };
 
+/** Converts raw bytes to a "binary string" (one char code per byte - the format that `btoa` expects) */
 const bytesToBinaryString = (bytes: Uint8Array): string => {
   let binary = "";
 
@@ -42,6 +45,7 @@ const bytesToBinaryString = (bytes: Uint8Array): string => {
   return binary;
 };
 
+/** Converts an `atob` "binary string" back to raw bytes for `TextDecoder` */
 const binaryStringToBytes = (binary: string): Uint8Array => {
   const bytes = new Uint8Array(binary.length);
 
@@ -52,6 +56,7 @@ const binaryStringToBytes = (binary: string): Uint8Array => {
   return bytes;
 };
 
+/** Restores `=` padding that base64url strips, since `atob` requires a padded input */
 const padBase64 = (base64: string): string => {
   const remainder = base64.length % 4;
 
@@ -62,10 +67,12 @@ const padBase64 = (base64: string): string => {
   return base64 + "=".repeat(4 - remainder);
 };
 
+// Node path: Buffer handles UTF-8 → base64 directly, no manual byte conversion needed
 const encodeWithBuffer = (input: string): string => Buffer.from(input, "utf8").toString("base64");
 
 const decodeWithBuffer = (input: string): string => Buffer.from(input, "base64").toString("utf8");
 
+// Browser/worker path: encode to UTF-8 bytes, then to a binary string btoa can base64-encode
 const encodeWithTextEncoding = (input: string): string =>
   btoa(bytesToBinaryString(new TextEncoder().encode(input)));
 

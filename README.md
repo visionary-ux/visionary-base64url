@@ -48,13 +48,13 @@ console.log(decoded);
 
 Use `base64url` for portable, URL-safe encoding of text or JSON data, making it ideal for environments where standard Base64 might break things. Safely drop it into contexts like:
 
-- **URL paths and query parameters** — embed data directly in URLs
-- **Filesystem-friendly** — safe for filenames and blob storage keys
-- **Shell scripts and CI pipelines** — avoid quoting or escaping issues in command-line tools and automation workflows
-- **JWTs and web tokens** — compliant with RFC 7515 (JWS compact serialization)
+- **URL paths and query parameters**: embed data directly in URLs
+- **Filesystem-friendly**: safe for filenames and blob storage keys
+- **Shell scripts and CI pipelines**: avoid quoting or escaping issues in command-line tools and automation workflows
+- **JWTs and web tokens**: compliant with RFC 7515 (JWS compact serialization)
 
 ## Reliability and testing
 
-- **Seeded fuzz test** - deterministically generated Unicode strings encode and decode back to the original text
-- **Unicode edge cases** - tests include ZWJ emoji, astral-plane characters, combining marks, control/invisible characters, and NFC/NFD distinctions
-- **Runtime parity** - tests verify matching behavior across `Buffer` and `TextEncoder`/`TextDecoder` + `btoa`/`atob`
+- **Seeded fuzz testing**: deterministic pseudorandom Unicode strings encode and decode back to the original text
+- **Unicode edge cases**: tests include ZWJ emoji, astral-plane characters, combining marks, control/invisible characters, and NFC/NFD distinctions
+- **Runtime parity**: tests verify matching behavior across `Buffer` and `TextEncoder`/`TextDecoder` + `btoa`/`atob`

@@ -60,7 +60,10 @@ const randomUnicodeScalar = (random: () => number): number => {
   }
 };
 
-/** Create deterministic pseudorandom number generator seeded by `FUZZ_SEED` */
+/**
+ * Create deterministic pseudorandom number generator seeded by `FUZZ_SEED`
+ * @implementation Mulberry32 PRNG
+ **/
 const createSeededRandom = (seed: number): (() => number) => {
   let state = seed >>> 0;
 

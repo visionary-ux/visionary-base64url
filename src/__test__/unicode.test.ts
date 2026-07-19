@@ -70,13 +70,13 @@ const unicodeCases = [
   },
 ] as const;
 
-/** UTF-8 round-trips must preserve exact code units — no NFC/NFD normalization. */
+// UTF-8 round-trips must preserve exact code units — no NFC/NFD normalization
 describe("unicode-safe round trips", () => {
   test.each(unicodeCases)("$name preserves exact code units", ({ text }) => {
     expect(decodeBase64Url(encodeBase64Url(text))).toEqual(text);
   });
 
-  /** Same visual character, different code units — encoding must not normalize NFC/NFD. */
+  // Same visual character, different code units — encoding must not normalize NFC/NFD
   test("NFC and NFD forms stay distinct", () => {
     expect(cafeNfc).not.toEqual(cafeNfd);
     expect(encodeBase64Url(cafeNfc)).not.toEqual(encodeBase64Url(cafeNfd));
