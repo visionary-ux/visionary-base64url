@@ -1,7 +1,7 @@
-import { decode as decodeBase64, encode as encodeBase64 } from "js-base64";
+import { base64ToUtf8, utf8ToBase64 } from "./runtime";
 
 /**
- * Encodes a string as base64url.
+ * Encodes a string as base64url
  *
  * @param input string to encode
  * @returns base64url-encoded string
@@ -12,11 +12,11 @@ export const encodeBase64Url = (input: string): string => {
     throw new Error("encodeBase64Url: input must be a string");
   }
 
-  return encodeBase64(input).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  return toBase64Url(utf8ToBase64(input));
 };
 
 /**
- * Decodes a base64url-encoded string to plain text.
+ * Decodes a base64url-encoded string to plain text
  *
  * @param input base64url-encoded string to decode
  * @returns decoded plain text string
@@ -26,5 +26,13 @@ export const decodeBase64Url = (input: string): string => {
   if (typeof input !== "string") {
     throw new Error("decodeBase64Url: input must be a string");
   }
-  return decodeBase64(input.replace(/-/g, "+").replace(/_/g, "/"));
+
+  return base64ToUtf8(fromBase64Url(input));
 };
+
+/** Converts standard Base64 into a URL-safe version (RFC 4648, Section 5) */
+const toBase64Url = (base64: string): string =>
+  base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+
+/** Converts URL-safe Base64 back to standard form (RFC 4648, Section 4: restores `+` and `/`) */
+const fromBase64Url = (base64Url: string): string => base64Url.replace(/-/g, "+").replace(/_/g, "/");
