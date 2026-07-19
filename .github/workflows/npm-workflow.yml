@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v6
 
@@ -35,14 +35,13 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           registry-url: https://registry.npmjs.org/
+          package-manager-cache: false
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
       - run: pnpm run test:ci
       - run: pnpm run test:package
       - name: Publish dry-run
-        run: pnpm publish --dry-run --no-git-checks
+        run: npm publish --dry-run
       - name: Publish to NPM
-        run: pnpm publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+        run: npm publish
