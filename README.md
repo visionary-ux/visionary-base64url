@@ -4,11 +4,13 @@
 
 A lightweight, zero-dependency `base64url` converter for Node.js, web browsers, and worker environments.
 
-Safely encodes emojis and unicode, like 🎉 and 汉字, into URL-safe base64.
+Safely encodes Unicode text, like 🎉 and 汉字, into URL-safe base64.
 
 ## Install
 
 ```bash
+pnpm add visionary-base64url
+
 npm install visionary-base64url
 
 yarn add visionary-base64url
@@ -50,3 +52,9 @@ Use `base64url` for portable, URL-safe encoding of text or JSON data, making it 
 - **Filesystem-friendly** — safe for filenames and blob storage keys
 - **Shell scripts and CI pipelines** — avoid quoting or escaping issues in command-line tools and automation workflows
 - **JWTs and web tokens** — compliant with RFC 7515 (JWS compact serialization)
+
+## Reliability and testing
+
+- **Seeded fuzz test** - deterministically generated Unicode strings encode and decode back to the original text
+- **Unicode edge cases** - tests include ZWJ emoji, astral-plane characters, combining marks, control/invisible characters, and NFC/NFD distinctions
+- **Runtime parity** - tests verify matching behavior across `Buffer` and `TextEncoder`/`TextDecoder` + `btoa`/`atob`

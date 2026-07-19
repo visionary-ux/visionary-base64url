@@ -1,22 +1,32 @@
 import { describe, expect, test } from "vitest";
 
-import { decodeBase64Url, encodeBase64Url } from "..";
+import { decodeBase64Url, encodeBase64Url } from "../index";
 
+// "café" as precomposed é (NFC) vs e + combining acute (NFD) — same glyph, different code units
 const cafeNfc = "caf\u00e9";
 const cafeNfd = "cafe\u0301";
 
+/** Round-trip cases for ZWJ, astral plane, combining marks, and invisible/control characters */
 const unicodeCases = [
   {
     name: "ZWJ family emoji",
     text: "👨‍👩‍👧‍👦",
   },
   {
-    name: "skin tone + profession ZWJ",
-    text: "👩🏽‍💻",
+    name: "light skin tone + profession ZWJ",
+    text: "👩🏼‍💻",
   },
   {
-    name: "flag + ZWJ sequence",
-    text: "🏳️‍🌈",
+    name: "medium skin tone waving hand (no ZWJ)",
+    text: "👋🏽",
+  },
+  {
+    name: "pirate flag (flag + ZWJ sequence)",
+    text: "🏴‍☠️",
+  },
+  {
+    name: "heart on fire (emoji + ZWJ sequence)",
+    text: "❤️‍🔥",
   },
   {
     name: "keycap sequence",
@@ -60,11 +70,13 @@ const unicodeCases = [
   },
 ] as const;
 
+/** UTF-8 round-trips must preserve exact code units — no NFC/NFD normalization. */
 describe("unicode-safe round trips", () => {
   test.each(unicodeCases)("$name preserves exact code units", ({ text }) => {
     expect(decodeBase64Url(encodeBase64Url(text))).toEqual(text);
   });
 
+  /** Same visual character, different code units — encoding must not normalize NFC/NFD. */
   test("NFC and NFD forms stay distinct", () => {
     expect(cafeNfc).not.toEqual(cafeNfd);
     expect(encodeBase64Url(cafeNfc)).not.toEqual(encodeBase64Url(cafeNfd));

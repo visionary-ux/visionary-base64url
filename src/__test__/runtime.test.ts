@@ -5,13 +5,15 @@ import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { base64ToUtf8, resetRuntimeForTesting, utf8ToBase64 } from "../runtime";
 import { testCases } from "./fixtures";
 
+// Store refs to native globals
 const NativeTextEncoder = globalThis.TextEncoder;
 const NativeTextDecoder = globalThis.TextDecoder;
 
+// Simulate browser btoa/atob in Node to test the TextEncoder path
 const browserBtoa = (binary: string): string => Buffer.from(binary, "binary").toString("base64");
-
 const browserAtob = (base64: string): string => Buffer.from(base64, "base64").toString("binary");
 
+// Run as Node only (Buffer available; TextEncoder/TextDecoder, atob/btoa stubbed out)
 const runWithBufferRuntime = <T>(fn: () => T): T => {
   vi.unstubAllGlobals();
   vi.stubGlobal("TextEncoder", undefined);
@@ -23,6 +25,7 @@ const runWithBufferRuntime = <T>(fn: () => T): T => {
   return fn();
 };
 
+// Run browser/worker path by unlinking Buffer
 const runWithTextEncodingRuntime = <T>(fn: () => T): T => {
   vi.unstubAllGlobals();
   vi.stubGlobal("Buffer", undefined);
@@ -35,6 +38,7 @@ const runWithTextEncodingRuntime = <T>(fn: () => T): T => {
   return fn();
 };
 
+// Buffer (Node) and TextEncoder+btoa (browser) paths must produce identical encode/decode results
 describe("cross-runtime interop", () => {
   afterEach(() => {
     vi.unstubAllGlobals();
@@ -48,14 +52,13 @@ describe("cross-runtime interop", () => {
     expect(textEncodingEncoded).toEqual(bufferEncoded);
 
     const bufferDecoded = runWithBufferRuntime(() => base64ToUtf8(bufferEncoded));
-    const textEncodingDecoded = runWithTextEncodingRuntime(() =>
-      base64ToUtf8(textEncodingEncoded)
-    );
+    const textEncodingDecoded = runWithTextEncodingRuntime(() => base64ToUtf8(textEncodingEncoded));
 
     expect(textEncodingDecoded).toEqual(bufferDecoded);
     expect(bufferDecoded).toEqual(text);
   });
 
+  // Test browser only (TextEncoder/TextDecoder + btoa/atob; Buffer not available)
   describe("browser runtime path", () => {
     beforeEach(() => {
       vi.unstubAllGlobals();
@@ -73,6 +76,7 @@ describe("cross-runtime interop", () => {
     });
   });
 
+  // Test node only using Buffer, browser APIs stubbed out
   describe("node runtime path", () => {
     beforeEach(() => {
       vi.unstubAllGlobals();
