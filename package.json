@@ -1,7 +1,7 @@
 {
   "version": "0.1.4",
   "name": "visionary-base64url",
-  "description": "A lightweight, zero-dependency base64url converter for Node.js, web browsers, and worker environments. Safely encodes emojis and unicode into URL-safe base64.",
+  "description": "Lightweight, zero-dependency base64url encoding/decoding for Node.js, web browsers, and edge runtimes. Safely encodes emojis and Unicode into URL-safe base64.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
