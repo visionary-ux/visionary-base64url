@@ -1,10 +1,10 @@
 # visionary-base64url
 
-[![NPM version](https://img.shields.io/npm/v/visionary-base64url?color=beige)](https://www.npmjs.com/package/visionary-base64url) [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/visionary-ux/visionary-base64url/.github%2Fworkflows%2Fci-cd-workflow.yml?branch=master)](https://github.com/visionary-ux/visionary-base64url/actions) [![NPM bundle size](https://img.shields.io/bundlephobia/minzip/visionary-base64url?color=blue)](https://bundlephobia.com/package/visionary-base64url) [![NPM Downloads](https://img.shields.io/npm/d18m/visionary-base64url?color=lightgray)](https://www.npmjs.com/package/visionary-base64url?activeTab=versions)
+[![NPM version](https://img.shields.io/npm/v/visionary-base64url?color=beige)](https://www.npmjs.com/package/visionary-base64url) [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/visionary-ux/visionary-base64url/.github%2Fworkflows%2Fci-cd-workflow.yml?branch=master)](https://github.com/visionary-ux/visionary-base64url/actions) [![NPM bundle size](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fdeno.bundlejs.com%2F%3Fq%3Dvisionary-base64url&query=%24.size.size&label=bundle%20size&color=blue)](https://bundlejs.com/?q=visionary-base64url) [![NPM Downloads](https://img.shields.io/npm/d18m/visionary-base64url?color=lightgray)](https://www.npmjs.com/package/visionary-base64url?activeTab=versions)
 
 A lightweight, zero-dependency `base64url` converter for Node.js, web browsers, and worker environments.
 
-Safely encodes Unicode text, like 🎉 and 汉字, into URL-safe base64.
+Safely encodes Unicode text, like 🎉 ＆ 汉字, into URL-safe base64.
 
 ## Install
 
