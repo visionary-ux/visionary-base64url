@@ -4,7 +4,7 @@
 
 A lightweight, zero-dependency `base64url` converter for Node.js, web browsers, and worker environments.
 
-Safely encodes Unicode text, like 🎉 and 汉字, into URL-safe base64.
+Safely encodes Unicode text, like 🎉 ＆ 汉字, into URL-safe base64.
 
 ## Install
 
