@@ -23,7 +23,7 @@ export const encodeBase64Url = (input: string): string => {
  *
  * @param input base64url-encoded string to decode
  * @returns decoded plain text string
- * @throws {Error} If input is not a string
+ * @throws {Error} If input is not a string or is not valid base64url
  */
 export const decodeBase64Url = (input: string): string => {
   if (typeof input !== "string") {

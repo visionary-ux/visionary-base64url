@@ -1,5 +1,5 @@
 {
-  "version": "0.1.4",
+  "version": "1.0.0-pre",
   "name": "visionary-base64url",
   "description": "Lightweight, zero-dependency base64url encoding/decoding for Node.js, web browsers, and edge runtimes. Safely encodes emojis and Unicode into URL-safe base64.",
   "type": "module",

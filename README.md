@@ -42,7 +42,7 @@ console.log(decoded);
 
 ## What is base64url?
 
-`base64url` is a web-safe variant of Base64 encoding. It replaces problematic characters (`+`, `=`, `/`) with URL and filename-friendly alternatives (`_`, `-`), as defined in [RFC 4648](https://datatracker.ietf.org/doc/html/rfc4648#section-5).
+`base64url` is the web-safe variant of Base64 encoding. This library handles problematic characters (`+`, `=`, `/`) by replacing them with URL and filename-friendly alternatives, per [RFC 4648](https://datatracker.ietf.org/doc/html/rfc4648#section-5).
 
 ## Where is base64url used?
 
