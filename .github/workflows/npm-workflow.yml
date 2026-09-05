@@ -41,7 +41,16 @@ jobs:
       - run: pnpm run build
       - run: pnpm run test:ci
       - run: pnpm run test:package
+      - name: Select npm dist-tag
+        id: npm-tag
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ "$VERSION" == *-* ]]; then
+            echo "tag=next" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=latest" >> "$GITHUB_OUTPUT"
+          fi
       - name: Publish dry-run
-        run: npm publish --dry-run
+        run: npm publish --dry-run --tag ${{ steps.npm-tag.outputs.tag }}
       - name: Publish to NPM
-        run: npm publish
+        run: npm publish --tag ${{ steps.npm-tag.outputs.tag }}
