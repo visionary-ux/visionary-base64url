@@ -38,9 +38,13 @@ jobs:
           package-manager-cache: false
 
       - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm run build
       - run: pnpm run test:ci
       - run: pnpm run test:package
+      - run: pnpm run test:types
+      - run: pnpm run test:browser
+      - run: pnpm run test:worker
       - name: Select npm dist-tag
         id: npm-tag
         run: |
