@@ -53,6 +53,11 @@ Use `base64url` for portable, URL-safe encoding of text or JSON data, making it 
 - **Shell scripts and CI pipelines**: avoid quoting or escaping issues in command-line tools and automation workflows
 - **JWTs and web tokens**: compliant with RFC 7515 (JWS compact serialization)
 
+## Error handling
+
+- `encodeBase64Url` throws when input is not a string
+- `decodeBase64Url` throws when input is not a string or not valid base64url
+
 ## Reliability and testing
 
 - **Seeded fuzz testing**: deterministic pseudorandom Unicode strings encode and decode back to the original text

@@ -2,8 +2,9 @@ import { Buffer } from "node:buffer";
 
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
-import { base64ToUtf8, resetRuntimeForTesting, utf8ToBase64 } from "../runtime";
 import { testCases } from "./fixtures";
+import { decodeBase64Url } from "../index";
+import { base64ToUtf8, resetRuntimeForTesting, utf8ToBase64 } from "../runtime";
 
 // Store refs to native globals
 const NativeTextEncoder = globalThis.TextEncoder;
@@ -40,6 +41,17 @@ const runWithTextEncodingRuntime = <T>(fn: () => T): T => {
 
 // Buffer (Node) and TextEncoder+btoa (browser) paths must produce identical encode/decode results
 describe("cross-runtime interop", () => {
+  const malformedBase64UrlCases = [
+    "Q", // impossible base64 length (%4 = 1)
+    "@@@", // invalid alphabet
+    "Zm9v$", // invalid trailing character
+    "YWJj=Z", // non-terminal padding
+    "YWErYg+", // '+' is not base64url
+    "YWIvYg/", // '/' is not base64url
+    "YQ===", // valid "YQ==" plus extra '='
+    "Zm9v==", // unnecessary padding for a %4 = 0 payload
+  ] as const;
+
   afterEach(() => {
     vi.unstubAllGlobals();
     resetRuntimeForTesting();
@@ -57,6 +69,33 @@ describe("cross-runtime interop", () => {
     expect(textEncodingDecoded).toEqual(bufferDecoded);
     expect(bufferDecoded).toEqual(text);
   });
+
+  test.each(malformedBase64UrlCases)(
+    "malformed base64url is rejected consistently for %s",
+    (input) => {
+      const bufferError = runWithBufferRuntime(() => {
+        try {
+          decodeBase64Url(input);
+          return null;
+        } catch (error) {
+          return error;
+        }
+      });
+      const textEncodingError = runWithTextEncodingRuntime(() => {
+        try {
+          decodeBase64Url(input);
+          return null;
+        } catch (error) {
+          return error;
+        }
+      });
+
+      expect(bufferError).toBeInstanceOf(Error);
+      expect(textEncodingError).toBeInstanceOf(Error);
+      expect((bufferError as Error).message).toEqual((textEncodingError as Error).message);
+      expect((bufferError as Error).message).toMatch(/decodeBase64Url.*valid base64url string/);
+    }
+  );
 
   // Test browser only (TextEncoder/TextDecoder + btoa/atob; Buffer not available)
   describe("browser runtime path", () => {
