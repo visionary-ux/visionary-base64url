@@ -1,17 +1,14 @@
-import { Buffer } from "node:buffer";
-
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
-import { base64ToUtf8, resetRuntimeForTesting, utf8ToBase64 } from "../runtime";
 import { testCases } from "./fixtures";
+import { decodeBase64Url } from "../index";
+import { base64ToUtf8, resetRuntimeForTesting, utf8ToBase64 } from "../runtime";
 
 // Store refs to native globals
 const NativeTextEncoder = globalThis.TextEncoder;
 const NativeTextDecoder = globalThis.TextDecoder;
-
-// Simulate browser btoa/atob in Node to test the TextEncoder path
-const browserBtoa = (binary: string): string => Buffer.from(binary, "binary").toString("base64");
-const browserAtob = (base64: string): string => Buffer.from(base64, "base64").toString("binary");
+const NativeBtoa = globalThis.btoa;
+const NativeAtob = globalThis.atob;
 
 // Run as Node only (Buffer available; TextEncoder/TextDecoder, atob/btoa stubbed out)
 const runWithBufferRuntime = <T>(fn: () => T): T => {
@@ -31,8 +28,8 @@ const runWithTextEncodingRuntime = <T>(fn: () => T): T => {
   vi.stubGlobal("Buffer", undefined);
   vi.stubGlobal("TextEncoder", NativeTextEncoder);
   vi.stubGlobal("TextDecoder", NativeTextDecoder);
-  vi.stubGlobal("btoa", browserBtoa);
-  vi.stubGlobal("atob", browserAtob);
+  vi.stubGlobal("btoa", NativeBtoa);
+  vi.stubGlobal("atob", NativeAtob);
   resetRuntimeForTesting();
 
   return fn();
@@ -40,6 +37,17 @@ const runWithTextEncodingRuntime = <T>(fn: () => T): T => {
 
 // Buffer (Node) and TextEncoder+btoa (browser) paths must produce identical encode/decode results
 describe("cross-runtime interop", () => {
+  const malformedBase64UrlCases = [
+    "Q", // impossible base64 length (%4 = 1)
+    "@@@", // invalid alphabet
+    "Zm9v$", // invalid trailing character
+    "YWJj=Z", // non-terminal padding
+    "YWErYg+", // '+' is not base64url
+    "YWIvYg/", // '/' is not base64url
+    "YQ===", // valid "YQ==" plus extra '='
+    "Zm9v==", // unnecessary padding for a %4 = 0 payload
+  ] as const;
+
   afterEach(() => {
     vi.unstubAllGlobals();
     resetRuntimeForTesting();
@@ -58,15 +66,42 @@ describe("cross-runtime interop", () => {
     expect(bufferDecoded).toEqual(text);
   });
 
-  // Test browser only (TextEncoder/TextDecoder + btoa/atob; Buffer not available)
+  test.each(malformedBase64UrlCases)(
+    "malformed base64url is rejected consistently for %s",
+    (input) => {
+      const bufferError = runWithBufferRuntime(() => {
+        try {
+          decodeBase64Url(input);
+          return null;
+        } catch (error) {
+          return error;
+        }
+      });
+      const textEncodingError = runWithTextEncodingRuntime(() => {
+        try {
+          decodeBase64Url(input);
+          return null;
+        } catch (error) {
+          return error;
+        }
+      });
+
+      expect(bufferError).toBeInstanceOf(Error);
+      expect(textEncodingError).toBeInstanceOf(Error);
+      expect((bufferError as Error).message).toEqual((textEncodingError as Error).message);
+      expect((bufferError as Error).message).toMatch(/decodeBase64Url.*valid base64url string/);
+    }
+  );
+
+  // Test the web-platform path (TextEncoder/TextDecoder + native btoa/atob; Buffer unavailable)
   describe("browser runtime path", () => {
     beforeEach(() => {
       vi.unstubAllGlobals();
       vi.stubGlobal("Buffer", undefined);
       vi.stubGlobal("TextEncoder", NativeTextEncoder);
       vi.stubGlobal("TextDecoder", NativeTextDecoder);
-      vi.stubGlobal("btoa", browserBtoa);
-      vi.stubGlobal("atob", browserAtob);
+      vi.stubGlobal("btoa", NativeBtoa);
+      vi.stubGlobal("atob", NativeAtob);
       resetRuntimeForTesting();
     });
 
