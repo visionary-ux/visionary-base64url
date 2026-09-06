@@ -24,12 +24,12 @@
     "build": "tsc --noEmit && tsup",
     "clean": "rimraf dist/",
     "prepublishOnly": "pnpm run clean && pnpm run build && pnpm run test:ci",
-    "test": "vitest",
-    "test:browser": "pnpm run build && vitest run --config vitest.browser.config.ts",
-    "test:ci": "vitest run",
-    "test:package": "node package-smoke.cjs",
+    "test": "vitest --config test/config/vitest.config.ts",
+    "test:browser": "pnpm run build && vitest run --config test/config/vitest.browser.config.ts",
+    "test:ci": "vitest run --config test/config/vitest.config.ts",
+    "test:package": "node test/config/package-smoke.cjs",
     "test:types": "pnpm run build && tsc -p test/types/tsconfig.json",
-    "test:worker": "pnpm run build && vitest run --config vitest.worker.config.ts"
+    "test:worker": "pnpm run build && vitest run --config test/config/vitest.worker.config.ts"
   },
   "license": "ISC",
   "keywords": [

@@ -6,8 +6,8 @@ const check = ({ encodeBase64Url, decodeBase64Url }) => {
 };
 
 (async () => {
-  check(require("./dist/index.cjs"));
-  check(await import("./dist/index.js"));
+  check(require("../../dist/index.cjs"));
+  check(await import("../../dist/index.js"));
   check(require("visionary-base64url"));
   check(await import("visionary-base64url"));
 
